@@ -225,9 +225,42 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\avatar-1.jpg" />
+    <Content Include="Images\avatar-2.jpg" />
+    <Content Include="Images\avatar-3.jpg" />
+    <Content Include="Images\avatar-4.jpg" />
+    <Content Include="Images\avatar-5.jpg" />
+    <Content Include="Images\bitbucket.png" />
+    <Content Include="Images\card-img-1.jpg" />
+    <Content Include="Images\card-img-2.jpg" />
+    <Content Include="Images\card-img-3.jpg" />
+    <Content Include="Images\card-img.jpg" />
+    <Content Include="Images\down-arrow.png" />
+    <Content Include="Images\drag-indicator.png" />
+    <Content Include="Images\dribbble.png" />
+    <Content Include="Images\dropbox.png" />
+    <Content Include="Images\eco-product-img-1.png" />
+    <Content Include="Images\eco-product-img-2.png" />
+    <Content Include="Images\eco-product-img-3.png" />
+    <Content Include="Images\eco-product-img-4.png" />
+    <Content Include="Images\eco-slider-img-1.png" />
+    <Content Include="Images\eco-slider-img-2.png" />
+    <Content Include="Images\eco-slider-img-3.png" />
+    <Content Include="Images\error-img.png" />
+    <Content Include="Images\github.png" />
+    <Content Include="Images\loader.svg" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\mail_chimp.png" />
+    <Content Include="Images\product-pic-2.jpg" />
+    <Content Include="Images\product-pic-3.jpg" />
+    <Content Include="Images\product-pic-4.jpg" />
+    <Content Include="Images\product-pic.jpg" />
+    <Content Include="Images\slack.png" />
+    <Content Include="Images\switch.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -314,7 +347,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="obj\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
