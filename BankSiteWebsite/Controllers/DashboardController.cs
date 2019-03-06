@@ -76,66 +76,6 @@ namespace BankSiteWebsite.Controllers
             return Redirect(authorizeUrl);
         }
 
-        ///// <summary>
-        ///// QBO API Request
-        ///// </summary>
-        //public ActionResult ApiCallService()
-        //{
-        //    if (Session["realmId"] != null)
-        //    {
-        //        string realmId = Session["realmId"].ToString();
-        //        try
-        //        {
-        //            var principal = User as ClaimsPrincipal;
-        //            OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
-
-        //            // Create a ServiceContext with Auth tokens and realmId
-        //            ServiceContext serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
-        //            serviceContext.IppConfiguration.MinorVersion.Qbo = "23";
-
-        //            // Create a QuickBooks QueryService using ServiceContext
-        //            QueryService<CompanyInfo> querySvc = new QueryService<CompanyInfo>(serviceContext);
-        //            CompanyInfo companyInfo = querySvc.ExecuteIdsQuery("SELECT * FROM CompanyInfo").FirstOrDefault();
-
-        //            string output = "Company Name: " + companyInfo.CompanyName + " Company Address: " + companyInfo.CompanyAddr.Line1 + ", " + companyInfo.CompanyAddr.City + ", " + companyInfo.CompanyAddr.Country + " " + companyInfo.CompanyAddr.PostalCode;
-        //            return View("ApiCallService", (object)("QBO API call Successful!! Response: " + output));
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return View("ApiCallService", (object)("QBO API call Failed!" + " Error message: " + ex.Message));
-        //        }
-        //    }
-        //    else
-        //        return View("ApiCallService", (object)"QBO API call Failed!");        
-        //}
-
-        private List<Invoice> GetAllInvoices()
-        {
-            var result = new List<Invoice>();
-            if (Session["realmId"] != null)
-            {
-                string realmId = Session["realmId"].ToString();
-                try
-                {
-                    var principal = User as ClaimsPrincipal;
-                    var oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
-
-                    // Create a ServiceContext with Auth tokens and realmId
-                    var serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
-                    serviceContext.IppConfiguration.MinorVersion.Qbo = "23";
-
-                    // Create a QuickBooks QueryService using ServiceContext
-                    var querySvc = new QueryService<Invoice>(serviceContext);
-                    result = querySvc.ExecuteIdsQuery("SELECT * FROM Invoice").ToList();
-
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-            return result;
-        }
-
         public ActionResult Home()
         {
             var model = new DasdhboardHomeModel
