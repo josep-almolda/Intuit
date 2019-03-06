@@ -13,6 +13,9 @@ using Intuit.Ipp.Security;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using BankSiteQBOData;
+using BankSiteWebsite.Models;
+using IdentityModel;
 
 namespace BankSiteWebsite.Controllers
 {
@@ -130,7 +133,15 @@ namespace BankSiteWebsite.Controllers
 
         public ActionResult Home()
         {
-            var model = GetAllInvoices();
+            var model = new DasdhboardHomeModel
+            {
+                Invoices = QBORepository.GetAll<Invoice>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
+                SalesReceipts = QBORepository.GetAll<SalesReceipt>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
+                Customers = QBORepository.GetAll<Customer>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
+                Date = DateTime.Now
+            };
+                
+                
             return View("Home", model);
         }
 

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /**
  * Summary:
  *
@@ -1936,7 +1936,7 @@ Container / Wrapper
 
 .dashboard-main-wrapper {
     min-height: 100%;
-    padding-top: 60px;
+    padding-top: 10px;
     position: relative;
 }
 

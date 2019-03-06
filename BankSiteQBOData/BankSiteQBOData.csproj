@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IppDotNetSdkForQuickBooksApiV3" Version="7.1.0-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Intuit.Ipp.Data">
+      <HintPath>..\BankSiteWebsite\packages\IppDotNetSdkForQuickBooksApiV3.7.1.0-beta\lib\Intuit.Ipp.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
