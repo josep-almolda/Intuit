@@ -34,35 +34,10 @@ namespace BankSiteWebsite.Controllers
         public ActionResult Index()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            if (Session["realmId"] != null)
-            {
-                try
-                {
-                    var realmId = Session["realmId"].ToString();
-                    var principal = User as ClaimsPrincipal;
-                    var oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
-
-                    // Create a ServiceContext with Auth tokens and realmId
-                    var serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
-
-                    return RedirectToAction("Home");
-                }
-                catch
-
-                {
-                    Session.Clear();
-                    Session.Abandon();
-                    Request.GetOwinContext().Authentication.SignOut("Cookies");
-                    return RedirectToAction("InitiateAuth");
-                }
-            }
-            else
-            {
-                Session.Clear();
-                Session.Abandon();
-                Request.GetOwinContext().Authentication.SignOut("Cookies");
-                return RedirectToAction("InitiateAuth");
-            }
+            Session.Clear();
+            Session.Abandon();
+            Request.GetOwinContext().Authentication.SignOut("Cookies");
+            return RedirectToAction("InitiateAuth");
         }
 
         /// <summary>
@@ -81,8 +56,6 @@ namespace BankSiteWebsite.Controllers
             var model = new DasdhboardHomeModel
             {
                 Invoices = QBORepository.GetAll<Invoice>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
-                SalesReceipts = QBORepository.GetAll<SalesReceipt>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
-                Customers = QBORepository.GetAll<Customer>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
                 Date = DateTime.Now
             };
 

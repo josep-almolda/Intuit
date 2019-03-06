@@ -18,7 +18,7 @@ namespace BankSiteWebsite.Controllers
         {
             //Sync the state info and update if it is not the same
             var state = Request.QueryString["state"];
-            if (state.Equals(AppController.auth2Client.CSRFToken, StringComparison.Ordinal))
+            if (state.Equals(DashboardController.auth2Client.CSRFToken, StringComparison.Ordinal))
             {
                 ViewBag.State = state + " (valid)";
             }
@@ -47,7 +47,7 @@ namespace BankSiteWebsite.Controllers
             }
 
             Request.GetOwinContext().Authentication.SignOut("TempState");
-            var tokenResponse = await AppController.auth2Client.GetBearerTokenAsync(code);
+            var tokenResponse = await DashboardController.auth2Client.GetBearerTokenAsync(code);
 
             var claims = new List<Claim>();
 
