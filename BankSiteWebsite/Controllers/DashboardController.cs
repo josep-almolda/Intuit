@@ -33,25 +33,36 @@ namespace BankSiteWebsite.Controllers
         /// </summary>
         public ActionResult Index()
         {
-           ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             if (Session["realmId"] != null)
             {
-                var realmId = Session["realmId"].ToString();
-                var principal = User as ClaimsPrincipal;
-                var oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
+                try
+                {
+                    var realmId = Session["realmId"].ToString();
+                    var principal = User as ClaimsPrincipal;
+                    var oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
 
-                // Create a ServiceContext with Auth tokens and realmId
-                var serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
+                    // Create a ServiceContext with Auth tokens and realmId
+                    var serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
+
+                    return RedirectToAction("Home");
+                }
+                catch
+
+                {
+                    Session.Clear();
+                    Session.Abandon();
+                    Request.GetOwinContext().Authentication.SignOut("Cookies");
+                    return RedirectToAction("InitiateAuth");
+                }
             }
             else
             {
                 Session.Clear();
                 Session.Abandon();
                 Request.GetOwinContext().Authentication.SignOut("Cookies");
-                return View();
+                return RedirectToAction("InitiateAuth");
             }
-
-            return RedirectToAction("Home");
         }
 
         /// <summary>
@@ -59,16 +70,10 @@ namespace BankSiteWebsite.Controllers
         /// </summary>
         public ActionResult InitiateAuth(string submitButton)
         {
-            switch (submitButton)
-            {
-                case "Connect to QuickBooks":
-                    List<OidcScopes> scopes = new List<OidcScopes>();
-                    scopes.Add(OidcScopes.Accounting);
-                    string authorizeUrl = auth2Client.GetAuthorizationURL(scopes);
-                    return Redirect(authorizeUrl);
-                default:
-                    return (View());
-            }
+            List<OidcScopes> scopes = new List<OidcScopes>();
+            scopes.Add(OidcScopes.Accounting);
+            string authorizeUrl = auth2Client.GetAuthorizationURL(scopes);
+            return Redirect(authorizeUrl);
         }
 
         ///// <summary>
@@ -140,8 +145,8 @@ namespace BankSiteWebsite.Controllers
                 Customers = QBORepository.GetAll<Customer>(Session["realmId"]?.ToString(), User as ClaimsPrincipal),
                 Date = DateTime.Now
             };
-                
-                
+
+
             return View("Home", model);
         }
 

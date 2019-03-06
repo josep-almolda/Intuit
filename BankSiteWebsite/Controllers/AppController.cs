@@ -28,11 +28,34 @@ namespace BankSiteWebsite.Controllers
         /// </summary>
         public ActionResult Index()
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            Session.Clear();
-            Session.Abandon();
-            Request.GetOwinContext().Authentication.SignOut("Cookies");
-            return View();
+            if (Session["realmId"] == null)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                Session.Clear();
+                Session.Abandon();
+                Request.GetOwinContext().Authentication.SignOut("Cookies");
+                return RedirectToAction("InitiateAuth");
+            }
+            else
+            {
+                string realmId = Session["realmId"].ToString();
+                try
+                {
+                    var principal = User as ClaimsPrincipal;
+                    OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
+                    ServiceContext serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
+
+                    return RedirectToAction("Home", "Dashboard");
+                }
+                catch
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    Session.Clear();
+                    Session.Abandon();
+                    Request.GetOwinContext().Authentication.SignOut("Cookies");
+                    return RedirectToAction("InitiateAuth");
+                }
+            }
         }
 
         /// <summary>
